@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:title" content="Child Care Finder" />
+    <meta name="description" content="Child Care Finder">
+    <meta property="og:description" content="Child Care Finder" />
+    <title>Child Care Finder</title>
+    <script src="app_test/js/jquery-3.1.1.min.js" />
+    <script src="app_test/js/mrjsontable.js" />
+    <link rel="stylesheet" href="app_test/css/mrjsontable.css" />
+</head>
+<body>
+
+<div id="queryResultContainer"></div>
+
+<script>
+$(document).ready(loadContext);
+ function loadContent()
+ {
+    var ExternalURL = "http://childcarefinder.choyware.com:5000/api/providers";
+
+    $.getJSON(ExternalURL, function (data) {
+      if (data != null && data.contents != null)
+      {
+        $("#queryResultContainer").mrjsontable({
+          columns: [
+            {
+              heading: "Name",
+              data: "name",
+              type: "string",
+              sortable: true, starthidden: false
+            },
+            new $.fn.mrjsontablecolumn({
+              heading: "Zip",
+              data: "zip" })
+          ]
+        });
+      }
+    });
+ }
+</script>
+
+</body>
+</html>

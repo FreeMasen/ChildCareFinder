@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<meta charset="utf-8" />
+	<title>Google Map Sample</title>
+	<meta name="generator" content="BBEdit 11.6" />
+	<style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 80%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 80%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+</head>
+<body>
+  <div id="map"></div>
+  <p>Getting current GPS location</p>
+  
+  <button onclick="getLocation()">Get My Location</button>
+  
+  <p id="mylocation"></p>
+  
+    <script>
+      var mylocation = document.getElementById("mylocation");
+      
+      function getLocation()
+      {
+      	if (navigator.geolocation) {
+      		navigator.geolocation.getCurrentPosition(showPosition);
+      	} else {
+      	  mylocation.innerHTML = "Geolocation is not supported by this browser";
+      	}
+      }
+      
+      function showPosition(position) {
+        var mylat = position.coords.latitute;
+        var mylon = position.coords.longitute;
+        mylocation.innerHTML = "My position<br>lat: " + mylat + "<br>lon: " + mylon;
+      }
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 41.850033, lng: -87.6500523},
+          zoom: 11
+        });
+
+        var layer = new google.maps.FusionTablesLayer({
+          query: {
+            select: '\'Geocodable address\'',
+            from: '1mZ53Z70NsChnBMm-qEYmSDOvLXgrreLTkQUvvg'
+          }
+        });
+        layer.setMap(map);
+      }
+      
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCw8vSJeHoX_-myVltCwNhl19A0oXpYRKI&callback=initMap">
+    </script>
+</body>
+</html>
